@@ -1,0 +1,11 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Rendered output
+out
+
+# Downloaded/generated media (rebuild with scripts/fetch-assets.sh and scripts/make-voiceover.sh)
+public/clips
+public/audio

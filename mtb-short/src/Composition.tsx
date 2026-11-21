@@ -22,43 +22,43 @@ export const MtbTip: React.FC<Props> = ({ accentColor, musicVolume }) => {
     <AbsoluteFill style={{ backgroundColor: "black" }}>
       {/* Footage track: one Sequence per cut */}
       <AbsoluteFill>
-        <Sequence name="Stop staring at your front wheel" from={0} durationInFrames={48}>
+        <Sequence name="Stop staring at your front wheel" from={0} durationInFrames={52}>
           <Shot src="40887.mp4" trimBefore={30} focusFrom={30} focusTo={35} />
         </Sequence>
-        <Sequence name="Bike goes where your eyes go" from={48} durationInFrames={50}>
+        <Sequence name="Bike goes where your eyes go" from={52} durationInFrames={60}>
           <Shot src="44340.mp4" trimBefore={0} focusFrom={68} focusTo={87} />
         </Sequence>
-        <Sequence name="Look ten feet ahead" from={98} durationInFrames={39}>
+        <Sequence name="Look ten feet ahead" from={112} durationInFrames={42}>
           <Shot src="46247.mp4" trimBefore={0} focusFrom={87} focusTo={72} />
         </Sequence>
-        <Sequence name="Not at the rock" from={137} durationInFrames={45}>
+        <Sequence name="Not at the rock" from={154} durationInFrames={51}>
           <Shot src="40893.mp4" trimBefore={120} focusFrom={35} focusTo={35} />
         </Sequence>
-        <Sequence name="Drop your heels" from={182} durationInFrames={27}>
+        <Sequence name="Drop your heels" from={205} durationInFrames={32}>
           <Shot src="40891.mp4" trimBefore={126} focusFrom={90} focusTo={85} />
         </Sequence>
-        <Sequence name="Bend your elbows" from={209} durationInFrames={28}>
-          <Shot src="44323.mp4" trimBefore={15} focusFrom={43} focusTo={43} />
+        <Sequence name="Bend your elbows" from={237} durationInFrames={32}>
+          <Shot src="44323.mp4" trimBefore={15} focusFrom={60} focusTo={58} />
         </Sequence>
-        <Sequence name="Let the bike move under you" from={237} durationInFrames={44}>
+        <Sequence name="Let the bike move under you" from={269} durationInFrames={54}>
           <Shot src="44332.mp4" trimBefore={66} focusFrom={15} focusTo={5} />
         </Sequence>
-        <Sequence name="Brake before the corner" from={281} durationInFrames={36}>
+        <Sequence name="Brake before the corner" from={323} durationInFrames={41}>
           <Shot src="44629.mp4" trimBefore={60} focusFrom={40} focusTo={30} />
         </Sequence>
-        <Sequence name="Not in it" from={317} durationInFrames={21}>
+        <Sequence name="Not in it" from={364} durationInFrames={28}>
           <Shot src="44319.mp4" trimBefore={138} focusFrom={88} focusTo={92} />
         </Sequence>
-        <Sequence name="Look through the exit and pump" from={338} durationInFrames={63}>
-          <Shot src="44333.mp4" trimBefore={26} focusFrom={30} focusTo={70} />
+        <Sequence name="Look through the exit and pump" from={392} durationInFrames={71}>
+          <Shot src="44333.mp4" trimBefore={15} focusFrom={30} focusTo={70} />
         </Sequence>
-        <Sequence name="Try this on your next ride" from={401} durationInFrames={36}>
+        <Sequence name="Try this on your next ride" from={463} durationInFrames={40}>
           <Shot src="44324.mp4" trimBefore={90} focusFrom={40} focusTo={45} />
         </Sequence>
-        <Sequence name="Feel the difference" from={437} durationInFrames={58}>
+        <Sequence name="Feel the difference" from={503} durationInFrames={69}>
           <Shot src="44322.mp4" trimBefore={390} focusFrom={50} focusTo={50} />
         </Sequence>
-        <Sequence name="Follow for more" from={495} durationInFrames={75}>
+        <Sequence name="Follow for more" from={572} durationInFrames={56}>
           <Shot src="48515.mp4" trimBefore={0} focusFrom={68} focusTo={45} />
         </Sequence>
       </AbsoluteFill>
@@ -67,78 +67,78 @@ export const MtbTip: React.FC<Props> = ({ accentColor, musicVolume }) => {
         accentColor={accentColor}
         top={46}
         words={[
-          {text: "STOP", startMs: 0, endMs: 260, highlight: true},
-          {text: "STARING", startMs: 260, endMs: 540, highlight: false},
-          {text: "AT", startMs: 540, endMs: 740, highlight: false},
-          {text: "YOUR", startMs: 740, endMs: 880, highlight: false},
-          {text: "FRONT", startMs: 880, endMs: 1080, highlight: false},
-          {text: "WHEEL", startMs: 1080, endMs: 1640, highlight: true},
-          {text: "YOUR", startMs: 1640, endMs: 1720, highlight: false},
-          {text: "BIKE", startMs: 1720, endMs: 1920, highlight: false},
-          {text: "GOES", startMs: 1920, endMs: 2160, highlight: false},
-          {text: "WHEREVER", startMs: 2160, endMs: 2400, highlight: false},
-          {text: "YOUR", startMs: 2400, endMs: 2600, highlight: false},
-          {text: "EYES", startMs: 2600, endMs: 2800, highlight: true},
-          {text: "GO", startMs: 2800, endMs: 3300, highlight: false},
-          {text: "SO", startMs: 3300, endMs: 3420, highlight: false},
-          {text: "LOOK", startMs: 3420, endMs: 3620, highlight: false},
-          {text: "TEN", startMs: 3620, endMs: 3860, highlight: false},
-          {text: "FEET", startMs: 3860, endMs: 4080, highlight: false},
-          {text: "AHEAD", startMs: 4080, endMs: 4620, highlight: true},
-          {text: "NOT", startMs: 4620, endMs: 4800, highlight: false},
-          {text: "AT", startMs: 4800, endMs: 4940, highlight: false},
-          {text: "THE", startMs: 4940, endMs: 5040, highlight: false},
-          {text: "ROCK", startMs: 5040, endMs: 5200, highlight: true},
-          {text: "YOU'RE", startMs: 5200, endMs: 5420, highlight: false},
-          {text: "SCARED", startMs: 5420, endMs: 5640, highlight: false},
-          {text: "OF", startMs: 5640, endMs: 6120, highlight: false},
-          {text: "DROP", startMs: 6120, endMs: 6300, highlight: false},
-          {text: "YOUR", startMs: 6300, endMs: 6480, highlight: false},
-          {text: "HEELS", startMs: 6480, endMs: 7040, highlight: true},
-          {text: "BEND", startMs: 7040, endMs: 7200, highlight: false},
-          {text: "YOUR", startMs: 7200, endMs: 7360, highlight: false},
-          {text: "ELBOWS", startMs: 7360, endMs: 7980, highlight: true},
-          {text: "AND", startMs: 7980, endMs: 8100, highlight: false},
-          {text: "LET", startMs: 8100, endMs: 8240, highlight: false},
-          {text: "THE", startMs: 8240, endMs: 8360, highlight: false},
-          {text: "BIKE", startMs: 8360, endMs: 8520, highlight: false},
-          {text: "MOVE", startMs: 8520, endMs: 8720, highlight: false},
-          {text: "UNDER", startMs: 8720, endMs: 9000, highlight: false},
-          {text: "YOU", startMs: 9000, endMs: 9400, highlight: false},
-          {text: "BRAKE", startMs: 9400, endMs: 9660, highlight: true},
-          {text: "BEFORE", startMs: 9660, endMs: 9900, highlight: true},
-          {text: "THE", startMs: 9900, endMs: 10060, highlight: false},
-          {text: "CORNER", startMs: 10060, endMs: 10600, highlight: false},
-          {text: "NOT", startMs: 10600, endMs: 10720, highlight: false},
-          {text: "IN", startMs: 10720, endMs: 10900, highlight: false},
-          {text: "IT", startMs: 10900, endMs: 11280, highlight: false},
-          {text: "THEN", startMs: 11280, endMs: 11360, highlight: false},
-          {text: "LOOK", startMs: 11360, endMs: 11520, highlight: false},
-          {text: "THROUGH", startMs: 11520, endMs: 11780, highlight: false},
-          {text: "THE", startMs: 11780, endMs: 11920, highlight: false},
-          {text: "EXIT", startMs: 11920, endMs: 12220, highlight: true},
-          {text: "AND", startMs: 12220, endMs: 12480, highlight: false},
-          {text: "PUMP", startMs: 12480, endMs: 12660, highlight: true},
-          {text: "OUT", startMs: 12660, endMs: 12880, highlight: false},
-          {text: "OF", startMs: 12880, endMs: 13000, highlight: false},
-          {text: "IT", startMs: 13000, endMs: 13420, highlight: false},
-          {text: "TRY", startMs: 13420, endMs: 13540, highlight: false},
-          {text: "THIS", startMs: 13540, endMs: 13700, highlight: false},
-          {text: "ON", startMs: 13700, endMs: 13900, highlight: false},
-          {text: "YOUR", startMs: 13900, endMs: 14040, highlight: false},
-          {text: "NEXT", startMs: 14040, endMs: 14260, highlight: false},
-          {text: "RIDE", startMs: 14260, endMs: 14620, highlight: false},
-          {text: "AND", startMs: 14620, endMs: 14800, highlight: false},
-          {text: "YOU'LL", startMs: 14800, endMs: 15020, highlight: false},
-          {text: "FEEL", startMs: 15020, endMs: 15160, highlight: false},
-          {text: "THE", startMs: 15160, endMs: 15360, highlight: false},
-          {text: "DIFFERENCE", startMs: 15360, endMs: 15640, highlight: true},
-          {text: "INSTANTLY", startMs: 15640, endMs: 16580, highlight: false},
-          {text: "FOLLOW", startMs: 16580, endMs: 16700, highlight: true},
-          {text: "FOR", startMs: 16700, endMs: 17000, highlight: false},
-          {text: "MORE", startMs: 17000, endMs: 17180, highlight: false},
-          {text: "TRAIL", startMs: 17180, endMs: 17440, highlight: false},
-          {text: "TIPS", startMs: 17440, endMs: 18380, highlight: false},
+          {text: "STOP", startMs: 0, endMs: 220, highlight: true},
+          {text: "STARING", startMs: 220, endMs: 560, highlight: false},
+          {text: "AT", startMs: 560, endMs: 720, highlight: false},
+          {text: "YOUR", startMs: 720, endMs: 820, highlight: false},
+          {text: "FRONT", startMs: 820, endMs: 1000, highlight: false},
+          {text: "WHEEL", startMs: 1000, endMs: 1720, highlight: true},
+          {text: "YOUR", startMs: 1840, endMs: 1900, highlight: false},
+          {text: "BIKE", startMs: 1900, endMs: 2140, highlight: false},
+          {text: "GOES", startMs: 2140, endMs: 2420, highlight: false},
+          {text: "WHEREVER", startMs: 2420, endMs: 2640, highlight: false},
+          {text: "YOUR", startMs: 2640, endMs: 2840, highlight: false},
+          {text: "EYES", startMs: 2840, endMs: 3060, highlight: true},
+          {text: "GO", startMs: 3060, endMs: 3820, highlight: false},
+          {text: "SO", startMs: 3820, endMs: 3980, highlight: false},
+          {text: "LOOK", startMs: 3980, endMs: 4120, highlight: false},
+          {text: "TEN", startMs: 4120, endMs: 4360, highlight: false},
+          {text: "FEET", startMs: 4360, endMs: 4560, highlight: false},
+          {text: "AHEAD", startMs: 4560, endMs: 5240, highlight: true},
+          {text: "NOT", startMs: 5240, endMs: 5400, highlight: false},
+          {text: "AT", startMs: 5400, endMs: 5520, highlight: false},
+          {text: "THE", startMs: 5520, endMs: 5600, highlight: false},
+          {text: "ROCK", startMs: 5600, endMs: 5800, highlight: true},
+          {text: "YOU'RE", startMs: 5800, endMs: 6020, highlight: false},
+          {text: "SCARED", startMs: 6020, endMs: 6200, highlight: false},
+          {text: "OF", startMs: 6200, endMs: 6900, highlight: false},
+          {text: "DROP", startMs: 6920, endMs: 7120, highlight: false},
+          {text: "YOUR", startMs: 7120, endMs: 7280, highlight: false},
+          {text: "HEELS", startMs: 7280, endMs: 8000, highlight: true},
+          {text: "BEND", startMs: 8000, endMs: 8160, highlight: false},
+          {text: "YOUR", startMs: 8160, endMs: 8300, highlight: false},
+          {text: "ELBOWS", startMs: 8300, endMs: 9040, highlight: true},
+          {text: "AND", startMs: 9080, endMs: 9220, highlight: false},
+          {text: "LET", startMs: 9220, endMs: 9320, highlight: false},
+          {text: "THE", startMs: 9320, endMs: 9440, highlight: false},
+          {text: "BIKE", startMs: 9440, endMs: 9660, highlight: false},
+          {text: "MOVE", startMs: 9660, endMs: 9880, highlight: false},
+          {text: "UNDER", startMs: 9880, endMs: 10160, highlight: false},
+          {text: "YOU", startMs: 10160, endMs: 10860, highlight: false},
+          {text: "BRAKE", startMs: 10860, endMs: 11100, highlight: true},
+          {text: "BEFORE", startMs: 11100, endMs: 11280, highlight: true},
+          {text: "THE", startMs: 11280, endMs: 11460, highlight: false},
+          {text: "CORNER", startMs: 11460, endMs: 12140, highlight: false},
+          {text: "NOT", startMs: 12220, endMs: 12340, highlight: false},
+          {text: "IN", startMs: 12340, endMs: 12520, highlight: false},
+          {text: "IT", startMs: 12520, endMs: 13180, highlight: false},
+          {text: "THEN", startMs: 13180, endMs: 13320, highlight: false},
+          {text: "LOOK", startMs: 13320, endMs: 13480, highlight: false},
+          {text: "THROUGH", startMs: 13480, endMs: 13700, highlight: false},
+          {text: "THE", startMs: 13700, endMs: 13840, highlight: false},
+          {text: "EXIT", startMs: 13840, endMs: 14140, highlight: true},
+          {text: "AND", startMs: 14140, endMs: 14400, highlight: false},
+          {text: "PUMP", startMs: 14400, endMs: 14600, highlight: true},
+          {text: "OUT", startMs: 14600, endMs: 14800, highlight: false},
+          {text: "OF", startMs: 14800, endMs: 14920, highlight: false},
+          {text: "IT", startMs: 14920, endMs: 15540, highlight: false},
+          {text: "TRY", startMs: 15540, endMs: 15720, highlight: false},
+          {text: "THIS", startMs: 15720, endMs: 15940, highlight: false},
+          {text: "ON", startMs: 15940, endMs: 16160, highlight: false},
+          {text: "YOUR", startMs: 16160, endMs: 16280, highlight: false},
+          {text: "NEXT", startMs: 16280, endMs: 16500, highlight: false},
+          {text: "RIDE", startMs: 16500, endMs: 16860, highlight: false},
+          {text: "AND", startMs: 16860, endMs: 17180, highlight: false},
+          {text: "YOU'LL", startMs: 17180, endMs: 17360, highlight: false},
+          {text: "FEEL", startMs: 17360, endMs: 17520, highlight: false},
+          {text: "THE", startMs: 17520, endMs: 17720, highlight: false},
+          {text: "DIFFERENCE", startMs: 17720, endMs: 18040, highlight: true},
+          {text: "INSTANTLY", startMs: 18040, endMs: 19000, highlight: false},
+          {text: "FOLLOW", startMs: 19180, endMs: 19360, highlight: true},
+          {text: "FOR", startMs: 19360, endMs: 19580, highlight: false},
+          {text: "MORE", startMs: 19580, endMs: 19760, highlight: false},
+          {text: "TRAIL", startMs: 19760, endMs: 19980, highlight: false},
+          {text: "TIPS", startMs: 19980, endMs: 20920, highlight: false},
         ]}
       />
 
@@ -165,7 +165,7 @@ export const MtbTipComposition = () => {
     <Composition
       id="MtbTip"
       component={MtbTip}
-      durationInFrames={570}
+      durationInFrames={628}
       fps={30}
       width={1080}
       height={1920}

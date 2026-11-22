@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mullet Cheat Code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0C0E; --blue:#38BDF8; --purple:#A855F7; --ink:#F8FAFC; --slate:#94A3B8;
+    --ease:cubic-bezier(0.16,1,0.3,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#050506;overflow:hidden;color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif}
+  body.rec{cursor:none}
+
+  /* ---------- 1080x1920 stage, scaled to fit ---------- */
+  #stage{position:absolute;left:50%;top:50%;width:1080px;height:1920px;background:var(--bg);overflow:hidden;
+    transform-origin:center center;box-shadow:0 0 0 1px #1c1f25,0 40px 120px rgba(0,0,0,.6)}
+  body.rec #stage{box-shadow:none}
+  .layer{position:absolute;inset:0;pointer-events:none}
+  #grid{inset:-200px;
+    background-image:
+      linear-gradient(rgba(56,189,248,.10) 2px,transparent 2px),
+      linear-gradient(90deg,rgba(56,189,248,.10) 2px,transparent 2px),
+      linear-gradient(rgba(148,163,184,.06) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(148,163,184,.06) 1px,transparent 1px);
+    background-size:200px 200px,200px 200px,40px 40px,40px 40px}
+  .blob{position:absolute;width:900px;height:900px;border-radius:50%;filter:blur(120px);opacity:.22}
+  #blobA{background:var(--blue)} #blobB{background:var(--purple)}
+  #vignette{background:radial-gradient(ellipse 75% 60% at 50% 50%,transparent 40%,rgba(0,0,0,.75) 100%)}
+  #grain{inset:-100px;opacity:.09;mix-blend-mode:overlay}
+  #content{position:absolute;inset:0;will-change:transform}
+  .scene{position:absolute;inset:0;will-change:opacity,transform,filter}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .fit{display:block;white-space:nowrap;text-align:center;margin:0 auto;width:max-content}
+
+  /* ---------- Scene 1: hook ---------- */
+  #hook{position:absolute;left:80px;right:80px;top:470px;text-align:center}
+  #hook .w{font-weight:700;letter-spacing:-.045em;line-height:.92;will-change:transform,opacity,filter}
+  .grad{background:linear-gradient(90deg,var(--blue),var(--purple),var(--blue));background-size:200% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 28px rgba(168,85,247,.45))}
+  #hookLine{height:6px;margin:34px auto 0;width:620px;background:linear-gradient(90deg,var(--blue),var(--purple));
+    box-shadow:0 0 24px var(--blue);transform-origin:left center}
+  #hookSub{margin-top:40px;font-size:46px;font-weight:700;color:var(--slate);text-align:center;white-space:nowrap}
+  #hookSub b{color:var(--blue)} #hookSub i{font-style:normal;color:var(--purple)} #hookSub span{color:#3b4250}
+
+  /* ---------- Scene 2/3: bike diagram ---------- */
+  .tagline{position:absolute;left:80px;right:80px;top:200px;font-size:32px;font-weight:700;letter-spacing:.18em;display:flex;align-items:center;gap:24px}
+  .tagline::after{content:"";flex:1;height:2px;background:currentColor;opacity:.4}
+  #tag2{color:var(--blue)} #tag3{color:var(--purple)} #tag4{color:var(--ink)}
+  #bikeSvg{position:absolute;left:40px;top:300px;overflow:visible}
+  .frame{fill:none;stroke:var(--ink);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+  .thin{stroke-width:5}
+  .tire{fill:none;stroke:var(--ink);stroke-width:12;stroke-dasharray:1;stroke-dashoffset:1}
+  .rim{fill:none;stroke:var(--slate);stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1}
+  .knobs{fill:none;stroke:var(--slate);stroke-width:6;stroke-dasharray:5 11}
+  .spoke{stroke:var(--slate);stroke-width:2;opacity:.7}
+  .hub{fill:var(--bg);stroke:var(--ink);stroke-width:4}
+  .hl{fill:none;stroke-width:13;stroke-linecap:round;opacity:0}
+  .hlB{stroke:var(--blue);filter:url(#glowB)} .hlP{stroke:var(--purple);filter:url(#glowP)}
+  .dim{fill:none;stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1}
+  .svgLbl{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:34px;text-anchor:middle;opacity:0}
+  .panel{position:absolute;left:80px;right:80px;top:1100px;height:180px;border:2px solid rgba(148,163,184,.22);border-radius:18px;
+    background:linear-gradient(180deg,rgba(15,18,23,.85),rgba(11,12,14,.6));padding:18px 24px;opacity:0}
+  .ptitle{font-size:26px;font-weight:700;letter-spacing:.16em;color:var(--slate);display:flex;justify-content:space-between}
+  .ptitle em{font-style:normal}
+  #panel2 svg{display:block;margin-top:6px}
+  #balTrack{position:relative;height:34px;margin-top:26px;border-radius:17px;background:
+      repeating-linear-gradient(90deg,rgba(148,163,184,.25) 0 2px,transparent 2px 40px),rgba(148,163,184,.08)}
+  #balZone{position:absolute;left:34%;width:32%;top:0;bottom:0;border-radius:17px;background:rgba(168,85,247,.28);border:2px solid var(--purple);box-shadow:0 0 24px rgba(168,85,247,.5)}
+  #balMark{position:absolute;top:-10px;width:8px;height:54px;margin-left:-4px;border-radius:4px;background:var(--ink);box-shadow:0 0 16px var(--ink)}
+  #balRead{margin-top:14px;font-size:28px;font-weight:700;color:var(--purple);display:flex;justify-content:space-between}
+  #balRead span{color:var(--slate)}
+  .callout{position:absolute;left:80px;right:80px;top:1320px;text-align:center}
+  .callout .ln{overflow:hidden;padding:4px 0}
+  .callout .ln > div{font-weight:700;letter-spacing:-.04em;line-height:1;will-change:transform}
+
+  /* ---------- Scene 4: gauges ---------- */
+  #s4title{position:absolute;left:80px;right:80px;top:290px}
+  #s4title .fit{font-weight:700;letter-spacing:-.04em;line-height:1}
+  #legend{position:absolute;left:80px;right:80px;top:470px;display:flex;justify-content:center;gap:48px;font-size:26px;font-weight:700;letter-spacing:.12em;color:var(--slate)}
+  #legend span{display:flex;align-items:center;gap:14px}
+  #legend i{display:inline-block;width:34px;height:14px;border-radius:7px}
+  .gauge{position:absolute;left:80px;right:80px;height:280px}
+  .glabel{font-size:46px;font-weight:700;letter-spacing:-.02em;display:flex;gap:20px;align-items:baseline;white-space:nowrap}
+  .glabel .gnum{font-size:26px;color:var(--slate)}
+  .row{display:flex;align-items:center;gap:20px;margin-top:22px}
+  .rl{width:150px;font-size:26px;font-weight:700;letter-spacing:.1em;color:var(--slate)}
+  .track{flex:1;height:30px;border-radius:15px;position:relative;overflow:hidden;background:
+      repeating-linear-gradient(90deg,rgba(148,163,184,.18) 0 2px,transparent 2px 37px),rgba(148,163,184,.07)}
+  .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:15px}
+  .f29{background:linear-gradient(90deg,#475569,var(--slate))}
+  .fm{background:linear-gradient(90deg,var(--blue),var(--purple));box-shadow:0 0 22px rgba(168,85,247,.6)}
+  .val{width:84px;text-align:right;font-size:28px;font-weight:800}
+  .tag{position:absolute;right:0;top:4px;font-size:26px;font-weight:800;letter-spacing:.14em;padding:6px 16px;border-radius:10px;border:2px solid currentColor}
+  .tag.high{color:var(--blue)} .tag.max{color:var(--purple)}
+
+  /* ---------- Scene 5: outro ---------- */
+  #outro{position:absolute;left:80px;right:80px;top:430px;text-align:center}
+  #outro .w{font-weight:700;letter-spacing:-.045em;line-height:.95;will-change:transform,opacity,filter}
+  .cb{color:var(--blue);text-shadow:0 0 40px rgba(56,189,248,.5)} .cp{color:var(--purple);text-shadow:0 0 40px rgba(168,85,247,.55)}
+  #glyph{display:block;margin:70px auto 0;overflow:visible}
+  #question{margin-top:46px;font-size:50px;font-weight:800;text-align:center;white-space:nowrap}
+  #question .dim2{color:var(--slate)}
+  #cursor{color:var(--purple)}
+
+  /* ---------- Controls (outside the frame) ---------- */
+  #ui{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;
+    padding:10px 14px;border-radius:14px;background:rgba(20,22,27,.92);border:1px solid #2a2f38;
+    font:600 13px 'JetBrains Mono',monospace;color:#cbd5e1;z-index:10;backdrop-filter:blur(10px);user-select:none}
+  #ui button{font:inherit;color:#e2e8f0;background:#262b34;border:1px solid #363c48;border-radius:9px;padding:8px 12px;cursor:pointer}
+  #ui button:hover{background:#313744}
+  #ui button.rec{background:linear-gradient(90deg,#0e7490,#7e22ce);border-color:transparent}
+  #scrub{width:min(38vw,420px);accent-color:var(--purple)}
+  #time{min-width:104px;text-align:center}
+  #ui label{display:flex;align-items:center;gap:6px;cursor:pointer}
+  body.rec #ui{display:none}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="grid" class="layer"></div>
+  <div class="layer"><div id="blobA" class="blob"></div><div id="blobB" class="blob"></div></div>
+
+  <div id="content">
+    <!-- 0.0–3.0  HOOK -->
+    <section id="s1" class="scene">
+      <div id="hook">
+        <div class="w fit" data-max="150">WHY</div>
+        <div class="w fit" data-max="260">MULLET</div>
+        <div class="w fit" data-max="170">BIKES FEEL</div>
+        <div class="w fit" data-max="170">LIKE A</div>
+        <div class="w fit grad" data-max="200">CHEAT CODE.</div>
+        <div id="hookLine"></div>
+        <div id="hookSub" class="mono"><b>29" FRONT</b> <span>//</span> <i>27.5" REAR</i></div>
+      </div>
+    </section>
+
+    <!-- 3.0–15.0  BIKE DIAGRAM -->
+    <section id="sBike" class="scene">
+      <div id="tag2" class="tagline mono">01 // ROLLOVER + SPEED</div>
+      <div id="tag3" class="tagline mono">02 // AGILITY + POP</div>
+
+      <svg id="bikeSvg" width="1000" height="780" viewBox="0 -60 1000 780">
+        <defs>
+          <filter id="glowB" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="glowP" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#94A3B8" stop-opacity=".16"/><stop offset="1" stop-color="#94A3B8" stop-opacity="0"/></linearGradient>
+        </defs>
+
+        <path id="groundFill" fill="url(#groundGrad)"/>
+        <path id="ground" fill="none" stroke="#94A3B8" stroke-width="3" stroke-linejoin="round"/>
+        <g id="streaks" stroke="#A855F7" stroke-width="4" stroke-linecap="round" opacity="0">
+          <line x1="-40" y1="0" x2="120" y2="0"/><line x1="10" y1="40" x2="150" y2="40"/><line x1="-20" y1="80" x2="90" y2="80"/>
+        </g>
+        <circle id="burst" fill="none" stroke="#A855F7" stroke-width="5" r="0"/>
+        <g id="manualArc" opacity="0">
+          <line id="arcBase" stroke="#94A3B8" stroke-width="2" stroke-dasharray="8 8"/>
+          <path id="arcPath" fill="none" stroke="#A855F7" stroke-width="4" filter="url(#glowP)"/>
+          <text id="arcTxt" class="svgLbl" style="opacity:1;fill:#A855F7;font-size:30px"></text>
+        </g>
+
+        <g id="bikeG">
+          <!-- rear wheel (27.5) -->
+          <g transform="translate(235 504)">
+            <g id="rwSpin"><circle r="143" class="knobs"/><g class="spokes" data-r="122"></g></g>
+            <circle r="136" class="tire draw" pathLength="1"/>
+            <circle r="122" class="rim draw" pathLength="1"/>
+            <circle r="10" class="hub"/>
+            <circle r="136" class="hl hlP" id="rwHL"/>
+          </g>
+          <!-- front wheel (29) -->
+          <g transform="translate(826 490)">
+            <g id="fwSpin"><circle r="157" class="knobs"/><g class="spokes" data-r="136"></g></g>
+            <circle r="150" class="tire draw" pathLength="1"/>
+            <circle r="136" class="rim draw" pathLength="1"/>
+            <circle r="10" class="hub"/>
+            <circle r="150" class="hl hlB" id="fwHL"/>
+          </g>
+
+          <!-- rear triangle -->
+          <path class="frame draw" pathLength="1" d="M455 520 L235 504"/>
+          <path class="frame draw thin" pathLength="1" d="M425 300 L235 504"/>
+          <path class="hl hlP rearHL" d="M455 520 L235 504"/>
+          <path class="hl hlP rearHL" d="M425 300 L235 504"/>
+          <!-- front triangle -->
+          <path class="frame draw" pathLength="1" d="M455 520 L405 240"/>
+          <path class="frame draw" pathLength="1" d="M418 292 L704 246"/>
+          <path class="frame draw" pathLength="1" d="M455 520 L738 306"/>
+          <path class="frame draw" pathLength="1" style="stroke-width:16" d="M700 232 L742 318"/>
+          <path class="frame draw" pathLength="1" d="M742 318 L826 490"/>
+          <path class="frame draw" pathLength="1" style="stroke-width:15" d="M786 408 L826 490"/>
+          <path class="frame draw" pathLength="1" style="stroke:#94A3B8;stroke-width:15" d="M440 362 L565 398"/>
+          <path class="frame draw thin" pathLength="1" d="M405 240 L398 204"/>
+          <path class="frame draw" pathLength="1" d="M348 202 Q398 190 450 201"/>
+          <path class="frame draw thin" pathLength="1" d="M700 232 L724 212"/>
+          <path class="frame draw" pathLength="1" d="M686 222 Q724 212 772 202"/>
+          <circle class="frame draw thin" pathLength="1" cx="455" cy="520" r="26"/>
+          <path class="frame draw thin" pathLength="1" d="M455 520 L480 572 M464 575 L498 570"/>
+          <!-- dimension lines -->
+          <path id="dimF" class="dim" pathLength="1" stroke="#38BDF8" d="M826 340 L826 640 M808 340 L844 340 M808 640 L844 640"/>
+          <path id="dimR" class="dim" pathLength="1" stroke="#A855F7" d="M235 368 L235 640 M217 368 L253 368 M217 640 L253 640"/>
+        </g>
+        <text id="lblF" class="svgLbl" x="826" y="712" fill="#38BDF8">Ø 29"</text>
+        <text id="lblR" class="svgLbl" x="235" y="712" fill="#A855F7">Ø 27.5"</text>
+      </svg>
+
+      <div id="panel2" class="panel">
+        <div class="ptitle mono"><span>AXLE PATH // ROUGH GROUND</span><em style="color:#38BDF8">LIVE</em></div>
+        <svg width="872" height="80" viewBox="0 0 872 80">
+          <polyline id="trSm" fill="none" stroke="#94A3B8" stroke-width="3" stroke-dasharray="7 7" stroke-linejoin="round"/>
+          <polyline id="tr29" fill="none" stroke="#38BDF8" stroke-width="5" stroke-linejoin="round" filter="url(#glowB)"/>
+          <circle id="trDot" r="8" fill="#38BDF8" filter="url(#glowB)"/>
+        </svg>
+        <div class="ptitle mono" style="margin-top:2px"><span style="color:#38BDF8">━ 29" FRONT: SMOOTH</span><span>┅ SMALLER WHEEL: SPIKY</span></div>
+      </div>
+
+      <div id="panel3" class="panel">
+        <div class="ptitle mono"><span>MANUAL BALANCE WINDOW</span><em style="color:#A855F7">27.5" REAR</em></div>
+        <div id="balTrack"><div id="balZone"></div><div id="balMark"></div></div>
+        <div id="balRead" class="mono"><b id="balTxt">θ 0.0°</b><span id="balState">FIND IT</span></div>
+      </div>
+
+      <div id="call2" class="callout">
+        <div class="ln"><div class="fit cb" data-max="120">29" FRONT =</div></div>
+        <div class="ln"><div class="fit" data-max="132">EATS CHOP &amp;</div></div>
+        <div class="ln"><div class="fit" data-max="132">HOLDS SPEED</div></div>
+      </div>
+      <div id="call3" class="callout">
+        <div class="ln"><div class="fit cp" data-max="120">27.5" REAR =</div></div>
+        <div class="ln"><div class="fit" data-max="132">INSTANT POP &amp;</div></div>
+        <div class="ln"><div class="fit" data-max="132">MANUAL CONTROL</div></div>
+      </div>
+    </section>
+
+    <!-- 15.0–20.5  GAUGES -->
+    <section id="s4" class="scene">
+      <div id="tag4" class="tagline mono">03 // HEAD TO HEAD</div>
+      <div id="s4title"><div class="fit" data-max="130">FULL 29ER <span style="color:#94A3B8">vs</span> <span class="grad">MULLET</span></div></div>
+      <div id="legend" class="mono"><span><i style="background:#94A3B8"></i>FULL 29ER</span><span><i style="background:linear-gradient(90deg,#38BDF8,#A855F7)"></i>MULLET 29/27.5</span></div>
+
+      <div class="gauge" style="top:620px" data-v29="90" data-vm="90">
+        <div class="glabel"><span class="gnum mono">01</span>FRONT TRACTION &amp; STABILITY</div>
+        <div class="row"><span class="rl mono">29ER</span><div class="track"><div class="fill f29"></div></div><span class="val mono">0</span></div>
+        <div class="row"><span class="rl mono">MULLET</span><div class="track"><div class="fill fm"></div></div><span class="val mono">0</span></div>
+        <div class="tag mono high" style="top:-52px">HIGH</div>
+      </div>
+      <div class="gauge" style="top:940px" data-v29="58" data-vm="100">
+        <div class="glabel"><span class="gnum mono">02</span>REAR CLEARANCE ON STEEPS</div>
+        <div class="row"><span class="rl mono">29ER</span><div class="track"><div class="fill f29"></div></div><span class="val mono">0</span></div>
+        <div class="row"><span class="rl mono">MULLET</span><div class="track"><div class="fill fm"></div></div><span class="val mono">0</span></div>
+        <div class="tag mono max" style="top:-52px">MAXED</div>
+      </div>
+      <div class="gauge" style="top:1260px" data-v29="52" data-vm="100">
+        <div class="glabel"><span class="gnum mono">03</span>JUMP &amp; WHEELIE FLICKABILITY</div>
+        <div class="row"><span class="rl mono">29ER</span><div class="track"><div class="fill f29"></div></div><span class="val mono">0</span></div>
+        <div class="row"><span class="rl mono">MULLET</span><div class="track"><div class="fill fm"></div></div><span class="val mono">0</span></div>
+        <div class="tag mono max" style="top:-52px">MAXED</div>
+      </div>
+    </section>
+
+    <!-- 20.5–25.0  OUTRO -->
+    <section id="s5" class="scene">
+      <div id="outro">
+        <div class="w fit" data-max="200">BIGGER</div>
+        <div class="w fit cb" data-max="200">UP FRONT.</div>
+        <div class="w fit" data-max="200">PLAYFUL</div>
+        <div class="w fit cp" data-max="200">OUT BACK.</div>
+        <svg id="glyph" width="420" height="170" viewBox="0 0 420 170">
+          <line x1="110" y1="95" x2="300" y2="85" stroke="#F8FAFC" stroke-width="7" stroke-linecap="round"/>
+          <circle id="gR" cx="110" cy="95" r="62" fill="none" stroke="#A855F7" stroke-width="9" filter="url(#glowP)"/>
+          <circle id="gF" cx="300" cy="85" r="72" fill="none" stroke="#38BDF8" stroke-width="9" filter="url(#glowB)"/>
+        </svg>
+        <div id="question" class="mono"><span id="qText"></span><span id="cursor">▌</span></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="grain" class="layer"></div>
+  <div id="vignette" class="layer"></div>
+</div>
+
+<div id="ui">
+  <button id="btnPlay" title="Space">❚❚ Pause</button>
+  <button id="btnReplay" title="R">↺ Replay</button>
+  <input id="scrub" type="range" min="0" max="25" step="0.01" value="0">
+  <span id="time">00.00 / 25.00</span>
+  <label><input id="chkLoop" type="checkbox" checked> Loop</label>
+  <button id="btnRec" class="rec" title="H">Hide UI for Screen Recording</button>
+</div>
+
+<script>
+(() => {
+  const D = 25, TAU = Math.PI * 2;
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+  /* cubic-bezier(0.16,1,0.3,1) solver */
+  function bezier(x1, y1, x2, y2) {
+    const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
+    const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+    const sx = t => ((ax * t + bx) * t + cx) * t, sy = t => ((ay * t + by) * t + cy) * t;
+    const dx = t => (3 * ax * t + 2 * bx) * t + cx;
+    return x => {
+      if (x <= 0) return 0; if (x >= 1) return 1;
+      let t = x;
+      for (let i = 0; i < 8; i++) { const e = sx(t) - x, d = dx(t); if (Math.abs(e) < 1e-6) break; if (Math.abs(d) < 1e-6) break; t -= e / d; }
+      if (t < 0 || t > 1) { let lo = 0, hi = 1; t = x; while (hi - lo > 1e-6) { sx(t) < x ? lo = t : hi = t; t = (lo + hi) / 2; } }
+      return sy(t);
+    };
+  }
+  const EASE = bezier(0.16, 1, 0.3, 1);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const seg = (t, a, b) => clamp((t - a) / (b - a));
+  const e = (t, a, b) => EASE(seg(t, a, b));
+  const vis = (el, o) => { el.style.opacity = o; el.style.visibility = o <= 0.001 ? 'hidden' : 'visible'; };
+
+  /* ---------- setup ---------- */
+  const stage = $('#stage'), content = $('#content');
+  // spokes
+  $$('.spokes').forEach(g => {
+    const r = +g.dataset.r; let h = '';
+    for (let i = 0; i < 18; i++) { const a = i / 18 * TAU; h += `<line class="spoke" x1="${Math.cos(a) * 12}" y1="${Math.sin(a) * 12}" x2="${Math.cos(a + .35) * r}" y2="${Math.sin(a + .35) * r}"/>`; }
+    g.innerHTML = h;
+  });
+  // film grain texture (generated, no external files)
+  (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 256;
+    const x = c.getContext('2d'), d = x.createImageData(256, 256);
+    for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+    x.putImageData(d, 0, 0); $('#grain').style.backgroundImage = `url(${c.toDataURL()})`;
+  })();
+  // fit headline lines to the 920px safe width
+  function fitAll() {
+    $$('.fit').forEach(el => {
+      const max = +el.dataset.max || 120; el.style.fontSize = max + 'px';
+      const w = el.scrollWidth; if (w > 920) el.style.fontSize = Math.floor(max * 920 / w) + 'px';
+    });
+  }
+  fitAll(); document.fonts && document.fonts.ready.then(() => { fitAll(); render(t); });
+
+  /* ---------- scene refs ---------- */
+  const s1 = $('#s1'), hookW = $$('#hook .w'), hookLine = $('#hookLine'), hookSub = $('#hookSub');
+  const sBike = $('#sBike'), bikeG = $('#bikeG'), draws = $$('#bikeSvg .draw');
+  const ground = $('#ground'), groundFill = $('#groundFill');
+  const fwSpin = $('#fwSpin'), rwSpin = $('#rwSpin'), fwHL = $('#fwHL'), rwHL = $('#rwHL'), rearHL = $$('.rearHL');
+  const dimF = $('#dimF'), dimR = $('#dimR'), lblF = $('#lblF'), lblR = $('#lblR');
+  const tag2 = $('#tag2'), tag3 = $('#tag3'), panel2 = $('#panel2'), panel3 = $('#panel3');
+  const call2 = $$('#call2 .ln > div'), call3 = $$('#call3 .ln > div');
+  const tr29 = $('#tr29'), trSm = $('#trSm'), trDot = $('#trDot');
+  const balMark = $('#balMark'), balTxt = $('#balTxt'), balState = $('#balState');
+  const streaks = $('#streaks'), burst = $('#burst'), manualArc = $('#manualArc'), arcPath = $('#arcPath'), arcBase = $('#arcBase'), arcTxt = $('#arcTxt');
+  const s4 = $('#s4'), tag4 = $('#tag4'), s4title = $('#s4title'), legend = $('#legend'), gauges = $$('.gauge');
+  const s5 = $('#s5'), outW = $$('#outro .w'), glyph = $('#glyph'), gF = $('#gF'), gR = $('#gR'), qText = $('#qText'), cursor = $('#cursor'), question = $('#question');
+
+  /* ---------- terrain + rollover physics ---------- */
+  const G = 640, RF = 150, RR = 136, FX = 826, RX = 235, WB = FX - RX, P = 900;
+  const BUMPS = [ // c=center, w=half width, a=height, p=shape (2 = root, 6 = flat rock)
+    { c: 110, w: 13, a: 30, p: 2 }, { c: 300, w: 46, a: 46, p: 6 }, { c: 455, w: 10, a: 24, p: 2 },
+    { c: 505, w: 12, a: 28, p: 2 }, { c: 700, w: 58, a: 38, p: 6 }, { c: 820, w: 9, a: 20, p: 2 }];
+  function h(u) {
+    let y = 0;
+    for (const b of BUMPS) { const d = (((u - b.c + P / 2) % P) + P) % P - P / 2; y = Math.max(y, b.a / (1 + Math.pow(Math.abs(d) / b.w, b.p))); }
+    return y;
+  }
+  function lift(u, r, amp) { // exact circle-on-profile contact height
+    if (amp <= 0) return 0;
+    let m = 0;
+    for (let dx = -r * 0.75; dx <= r * 0.75; dx += 4) { const v = h(u + dx) * amp - (r - Math.sqrt(r * r - dx * dx)); if (v > m) m = v; }
+    return m;
+  }
+  const scroll = t => { const tt = Math.max(0, t - 3.4); return 420 * (tt - 0.7 * (1 - Math.exp(-tt / 0.7))); };
+
+  /* ---------- impacts for screen shake ---------- */
+  const SLAM1 = [0.10, 0.40, 0.76, 1.06, 1.40], SLAM5 = [20.62, 20.88, 21.36, 21.62];
+  const IMPACTS = [[0.15, 9], [0.45, 16], [0.81, 8], [1.11, 8], [1.45, 20], [14.2, 7], [16.9, 5], [18.35, 7], [19.8, 7],
+    [20.67, 10], [20.93, 14], [21.41, 10], [21.67, 16]];
+
+  function slam(el, t, t0, from = 1.9) {
+    const p = e(t, t0, t0 + 0.5);
+    el.style.opacity = seg(t, t0, t0 + 0.07);
+    el.style.transform = `translateY(${(1 - p) * -24}px) scale(${lerp(from, 1, p)})`;
+    el.style.filter = `blur(${(1 - p) * 16}px)`;
+  }
+  function reveal(lines, t, t0, tOut) {
+    lines.forEach((el, i) => {
+      const p = e(t, t0 + i * 0.12, t0 + i * 0.12 + 0.6), q = e(t, tOut + i * 0.05, tOut + i * 0.05 + 0.35);
+      el.style.transform = `translateY(${(1 - p) * 110 - q * 110}%)`;
+    });
+  }
+
+  /* ---------- render(t): every frame is a pure function of time ---------- */
+  function render(t) {
+    // background (periodic over 25s so the loop is seamless)
+    const g = (t / D) * 200;
+    $('#grid').style.transform = `translate(${-((2 * g) % 200)}px, ${-(g % 200)}px)`;
+    $('#blobA').style.transform = `translate(${-250 + Math.sin(TAU * t / D) * 160}px, ${120 + Math.cos(TAU * t / D) * 120}px)`;
+    $('#blobB').style.transform = `translate(${420 + Math.cos(TAU * t / D * 2) * 140}px, ${1100 + Math.sin(TAU * t / D) * 160}px)`;
+
+    // shake + micro-parallax
+    let sx = 0, sy = 0;
+    for (const [ti, amp] of IMPACTS) { const d = t - ti; if (d >= 0 && d < 0.6) { const k = amp * Math.exp(-d * 11); sx += k * Math.sin(d * 97); sy += k * Math.cos(d * 79); } }
+    content.style.transform = `translate(${Math.sin(TAU * t / 12.5) * 7 + sx}px, ${Math.cos(TAU * t / (D / 3)) * 6 + sy}px)`;
+
+    /* ----- Scene 1: hook (0–3s) ----- */
+    const o1 = 1 - e(t, 2.62, 3.0);
+    vis(s1, t < 3.05 ? o1 : 0);
+    if (t < 3.05) {
+      s1.style.transform = `scale(${1 + 0.14 * e(t, 2.62, 3.0)})`; s1.style.filter = `blur(${e(t, 2.62, 3.0) * 12}px)`;
+      hookW.forEach((w, i) => slam(w, t, SLAM1[i], i === 4 ? 2.4 : 1.9));
+      hookW[4].style.backgroundPosition = `${(t * 60) % 200}% 0`;
+      hookLine.style.transform = `scaleX(${e(t, 1.55, 2.2)})`; hookLine.style.opacity = seg(t, 1.55, 1.7);
+      const ps = e(t, 1.85, 2.55); hookSub.style.opacity = ps; hookSub.style.letterSpacing = `${lerp(.5, .02, ps)}em`;
+    }
+
+    /* ----- Scenes 2+3: bike (3–15s) ----- */
+    const oB = e(t, 2.95, 3.4) * (1 - e(t, 14.7, 15.2));
+    vis(sBike, oB);
+    if (oB > 0) {
+      sBike.style.transform = `translateY(${(1 - e(t, 2.95, 3.8)) * 80 - e(t, 14.7, 15.2) * 60}px) scale(${1 - e(t, 14.7, 15.2) * 0.06})`;
+      draws.forEach((d, i) => d.style.strokeDashoffset = 1 - e(t, 3.05 + i * 0.07, 3.85 + i * 0.07));
+      $$('.spoke').forEach(s => s.style.opacity = 0.7 * e(t, 4.0, 4.6));
+      $$('.knobs').forEach(k => k.style.opacity = e(t, 4.0, 4.6));
+
+      const s = scroll(t), amp = e(t, 4.0, 4.9) * (1 - e(t, 9.0, 9.9));
+      // ground
+      let d = '';
+      for (let x = -20; x <= 1020; x += 6) d += (x === -20 ? 'M' : 'L') + x + ' ' + (G - h(x + s) * amp).toFixed(1) + ' ';
+      ground.setAttribute('d', d); groundFill.setAttribute('d', d + 'L1020 720 L-20 720 Z');
+      ground.style.opacity = groundFill.style.opacity = e(t, 3.2, 3.9);
+
+      // rollover lift + pitch
+      const lf = lift(FX + s, RF, amp), lr = lift(RX + s, RR, amp);
+      let pitch = -Math.atan2(lf - lr, WB) * 180 / Math.PI, y = -lr;
+      // manual (10.6–13.3) + pop (13.3–14.2)
+      const m = e(t, 10.6, 11.6) * (1 - e(t, 12.7, 13.25));
+      const wob = Math.sin((t - 11.6) * 5.4) * 1.8 * e(t, 11.4, 11.9) * (1 - e(t, 12.5, 12.9));
+      const manual = -16 * m + wob;
+      const pu = seg(t, 13.3, 14.2), hop = 4 * pu * (1 - pu) * 140, popPitch = -10 * Math.sin(Math.PI * pu) * (pu > 0 && pu < 1 ? 1 : 0);
+      const preload = 10 * Math.sin(Math.PI * seg(t, 13.05, 13.3)) + 8 * Math.sin(Math.PI * seg(t, 14.2, 14.45));
+      pitch += manual + popPitch; y += -hop + preload;
+      bikeG.setAttribute('transform', `translate(0 ${y.toFixed(2)}) rotate(${pitch.toFixed(3)} ${RX} 504)`);
+      fwSpin.setAttribute('transform', `rotate(${(s / RF * 180 / Math.PI).toFixed(2)})`);
+      rwSpin.setAttribute('transform', `rotate(${(s / RR * 180 / Math.PI).toFixed(2)})`);
+
+      // front (blue) focus 4.4–9.6
+      const fb = e(t, 4.4, 5.0) * (1 - e(t, 9.0, 9.6));
+      fwHL.style.opacity = fb;
+      dimF.style.strokeDashoffset = 1 - e(t, 4.8, 5.6); dimF.style.opacity = 1 - e(t, 8.9, 9.3);
+      lblF.style.opacity = e(t, 5.0, 5.5) * (1 - e(t, 8.9, 9.3));
+      vis(tag2, e(t, 3.5, 4.0) * (1 - e(t, 8.9, 9.25)));
+      tag2.style.transform = `translateX(${(1 - e(t, 3.5, 4.2)) * -60}px)`;
+      vis(panel2, e(t, 5.4, 5.9) * (1 - e(t, 8.9, 9.3)));
+      if (t > 5.3 && t < 9.4) {
+        let a = '', b = '';
+        for (let k = 0; k <= 96; k++) {
+          const u = FX + s - k * 7, x = 860 - k * 9;
+          a += `${x},${(66 - lift(u, RF, amp) * 1.25).toFixed(1)} `;
+          b += `${x},${(66 - lift(u, 92, amp) * 1.25).toFixed(1)} `;
+        }
+        tr29.setAttribute('points', a); trSm.setAttribute('points', b);
+        trDot.setAttribute('cx', 860); trDot.setAttribute('cy', (66 - lf * 1.25).toFixed(1));
+      }
+      reveal(call2, t, 5.2, 8.8);
+      vis($('#call2'), t < 9.3 ? 1 : 0);
+
+      // rear (purple) focus 9.4–15
+      const rb = e(t, 9.4, 10.0) * (1 - e(t, 14.6, 15.0));
+      rwHL.style.opacity = rb; rearHL.forEach(p => p.style.opacity = rb * 0.9);
+      dimR.style.strokeDashoffset = 1 - e(t, 9.8, 10.6); dimR.style.opacity = 1 - e(t, 14.5, 14.9);
+      lblR.style.opacity = e(t, 10.0, 10.5) * (1 - e(t, 14.5, 14.9));
+      vis(tag3, e(t, 9.4, 9.9) * (1 - e(t, 14.6, 15.0)));
+      tag3.style.transform = `translateX(${(1 - e(t, 9.4, 10.1)) * -60}px)`;
+      vis(panel3, e(t, 10.3, 10.8) * (1 - e(t, 14.5, 14.9)));
+      reveal(call3, t, 10.1, 14.5);
+      vis($('#call3'), t > 9.9 ? 1 : 0);
+
+      // manual arc around rear axle
+      const ang = Math.max(0, -(manual + popPitch));
+      const arcO = e(t, 10.6, 11.0) * (1 - e(t, 12.9, 13.3));
+      vis(manualArc, arcO);
+      if (arcO > 0) {
+        const cy = 504 + y, r = 300, a = ang * Math.PI / 180;
+        arcBase.setAttribute('x1', RX); arcBase.setAttribute('y1', cy); arcBase.setAttribute('x2', RX + r + 30); arcBase.setAttribute('y2', cy);
+        arcPath.setAttribute('d', `M${RX + r} ${cy} A${r} ${r} 0 0 0 ${(RX + r * Math.cos(a)).toFixed(1)} ${(cy - r * Math.sin(a)).toFixed(1)}`);
+        arcTxt.setAttribute('x', RX + r + 70); arcTxt.setAttribute('y', cy - r * Math.sin(a / 2) + 10); arcTxt.textContent = `θ${ang.toFixed(1)}°`;
+      }
+      // balance panel
+      const inZone = m > 0.9;
+      balMark.style.left = `${lerp(8, 50, m) + wob * 6}%`;
+      if (pu > 0 && pu < 1) { balTxt.textContent = `AIRTIME ${(pu * 0.9).toFixed(2)}s`; balState.textContent = 'POP ▲'; }
+      else { balTxt.textContent = `θ ${(-manual).toFixed(1)}°`; balState.textContent = inZone ? 'LOCKED IN ●' : 'FIND IT'; }
+      balState.style.color = inZone || (pu > 0 && pu < 1) ? '#A855F7' : '#94A3B8';
+
+      // pop FX
+      const bp = seg(t, 13.3, 13.9);
+      burst.setAttribute('cx', RX); burst.setAttribute('cy', G); burst.setAttribute('r', 20 + 220 * EASE(bp));
+      burst.style.opacity = bp > 0 && bp < 1 ? 1 - bp : 0;
+      streaks.style.opacity = clamp(hop / 40) * 0.8;
+      streaks.setAttribute('transform', `translate(${-60 - (t * 900) % 80} ${380 + y})`);
+    }
+
+    /* ----- Scene 4: gauges (15–20.5s) ----- */
+    const o4 = e(t, 15.05, 15.5) * (1 - e(t, 20.15, 20.55));
+    vis(s4, o4);
+    if (o4 > 0) {
+      s4.style.transform = `translateY(${(1 - e(t, 15.05, 15.8)) * 60 - e(t, 20.15, 20.55) * 40}px)`;
+      vis(tag4, e(t, 15.1, 15.5));
+      const pt = e(t, 15.15, 15.7); s4title.style.opacity = pt; s4title.style.transform = `scale(${lerp(1.5, 1, pt)})`; s4title.style.filter = `blur(${(1 - pt) * 12}px)`;
+      legend.style.opacity = e(t, 15.5, 15.9);
+      gauges.forEach((gEl, i) => {
+        const a = 15.6 + i * 1.45, v29 = +gEl.dataset.v29, vm = +gEl.dataset.vm;
+        const po = e(t, a - 0.1, a + 0.35);
+        gEl.style.opacity = po; gEl.style.transform = `translateX(${(1 - po) * 80}px)`;
+        const f29 = v29 * e(t, a + 0.15, a + 1.1), fm = vm * e(t, a + 0.3, a + 1.3);
+        const fills = gEl.querySelectorAll('.fill'), vals = gEl.querySelectorAll('.val');
+        fills[0].style.width = f29 + '%'; fills[1].style.width = fm + '%';
+        vals[0].textContent = Math.round(f29); vals[1].textContent = Math.round(fm);
+        const tg = gEl.querySelector('.tag'), pg = e(t, a + 1.15, a + 1.5);
+        tg.style.opacity = pg; tg.style.transform = `scale(${lerp(1.8, 1, pg)})`;
+        const flash = Math.exp(-Math.max(0, t - (a + 1.2)) * 6) * (t > a + 1.2 ? 1 : 0);
+        tg.style.boxShadow = `0 0 ${10 + flash * 40}px currentColor`;
+        fills[1].style.filter = `brightness(${1 + flash * 0.8})`;
+      });
+    }
+
+    /* ----- Scene 5: outro (20.5–25s), fades back to the bare grid for the loop ----- */
+    const out = e(t, 24.15, 24.9);
+    const o5 = seg(t, 20.5, 20.6) * (1 - out);
+    vis(s5, o5);
+    if (o5 > 0) {
+      s5.style.transform = `scale(${1 - out * 0.06})`; s5.style.filter = `blur(${out * 14}px)`;
+      outW.forEach((w, i) => slam(w, t, SLAM5[i], 2.1));
+      const pg = e(t, 22.1, 22.7);
+      glyph.style.opacity = pg; glyph.style.transform = `translateY(${(1 - pg) * 40}px)`;
+      gF.setAttribute('transform', `translate(0 ${Math.sin(t * 6) * 6})`); gR.setAttribute('transform', `translate(0 ${Math.sin(t * 6 + 1.4) * 6})`);
+      const Q = '29 / 27.5 — WOULD YOU RUN IT?', n = Math.floor(seg(t, 22.5, 23.5) * Q.length);
+      question.style.opacity = seg(t, 22.45, 22.55);
+      qText.innerHTML = Q.slice(0, n).replace('—', '<span class="dim2">—</span>');
+      cursor.style.opacity = (Math.floor(t * 2.5) % 2) ? 0 : 1;
+    }
+
+    // grain flicker
+    $('#grain').style.transform = `translate(${(Math.random() * 100) | 0}px, ${(Math.random() * 100) | 0}px)`;
+  }
+
+  /* ---------- playback + controls ---------- */
+  let t = 0, playing = true, last = performance.now();
+  const btnPlay = $('#btnPlay'), scrub = $('#scrub'), timeEl = $('#time'), chkLoop = $('#chkLoop');
+  const setPlaying = p => { playing = p; btnPlay.textContent = p ? '❚❚ Pause' : '▶ Play'; last = performance.now(); };
+  function frame(now) {
+    if (playing) {
+      t += (now - last) / 1000;
+      if (t >= D) { if (chkLoop.checked) t -= D; else { t = D; setPlaying(false); } }
+    }
+    last = now;
+    render(t);
+    scrub.value = t; timeEl.textContent = `${t.toFixed(2).padStart(5, '0')} / 25.00`;
+    requestAnimationFrame(frame);
+  }
+  btnPlay.onclick = () => { if (!playing && t >= D) t = 0; setPlaying(!playing); };
+  $('#btnReplay').onclick = () => { t = 0; setPlaying(true); };
+  scrub.oninput = () => { t = +scrub.value; };
+  function setRec(on) {
+    document.body.classList.toggle('rec', on); layout();
+    if (on) { t = 0; setPlaying(false); setTimeout(() => setPlaying(true), 1000); } // 1s clean lead-in before playback
+  }
+  $('#btnRec').onclick = () => setRec(true);
+  addEventListener('keydown', ev => {
+    if (ev.target.tagName === 'INPUT' && ev.code !== 'Space') return;
+    if (ev.code === 'Space') { ev.preventDefault(); btnPlay.click(); }
+    else if (ev.key === 'r' || ev.key === 'R') $('#btnReplay').click();
+    else if (ev.key === 'h' || ev.key === 'H') setRec(!document.body.classList.contains('rec'));
+    else if (ev.key === 'Escape') setRec(false);
+  });
+  function layout() {
+    const rec = document.body.classList.contains('rec');
+    const availH = innerHeight - (rec ? 0 : 96), availW = innerWidth - (rec ? 0 : 40);
+    const s = Math.min(availW / 1080, availH / 1920);
+    stage.style.transform = `translate(-50%, ${rec ? -50 : `calc(-50% - 40px)`}) scale(${s})`;
+  }
+  addEventListener('resize', layout); layout();
+  window.__seek = v => { t = v; setPlaying(false); render(t); }; // used for frame-accurate exports/tests
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
